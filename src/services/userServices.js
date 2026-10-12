@@ -386,7 +386,8 @@ export class UserService {
 
       return {
         status: 'USER FOUND SUCCESSFULLY',
-        userData: UserService._formatUser(theUser, { includePassword: true })
+        // includePassword: true — this object is for internal auth use only.
+        userData: UserService._formatUser(theUser, { includePassword: false })
       };
 
     } catch (err) {
@@ -445,7 +446,7 @@ export class UserService {
 
     return {
       ...rest,
-      ...Boom(includePassword ? { password } : {}),
+      ...(includePassword ? { password } : {}),
       role: roleData ?? null,
       status: statusData ?? null,
       phones: phones ?? [],
