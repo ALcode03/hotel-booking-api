@@ -52,7 +52,7 @@ api.use(morgan('dev'));
 // Configure CORS to allow requests from the configured frontend origin.
 // Mounted before the body parsers and the routers so preflight OPTIONS
 // requests (which carry no apikey/Authorization headers) are answered here
-// and never reach checkApiKey.
+// and never reach checkAPIkey.
 api.use(cors({
   origin: config.corsOrigin,
   allowedHeaders: ['Content-Type', 'Authorization', 'apikey'],
