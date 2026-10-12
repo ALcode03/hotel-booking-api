@@ -349,6 +349,33 @@ export class UserService {
     }
   }
 
+  async findByEmail(email) {
+
+    if(!email) {
+      throw Boom.badRequest('No email provided');
+    }
+
+    try {
+
+      const theUser = await User.findOne({
+        where: { email },
+        include: UserService.CATALOG_INCLUDES,
+      });
+
+      if (!theUser) {
+        throw Boom.notFound('User not found');
+      }
+
+      return {
+        status: 'USER FOUND SUCCESSFULLY',
+        userData: UserService._formatUser(theUser, { includePassword: true })
+      };
+
+    } catch (err) {
+      throw Boom.boomify(err, { message: 'Unable to find user by email' });
+    }
+  }
+
   // ---------------------------------------------------------------------------
   // STATIC UTILITIES
   // ---------------------------------------------------------------------------
